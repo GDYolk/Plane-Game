@@ -4,9 +4,9 @@ import java.awt.event.*;
 
 public class Main extends JPanel implements ActionListener {
     final int SCREEN_HEIGHT = 600, SCREEN_WIDTH = 700, UNIT_SIZE = 42;
-    boolean running = false, save = false, body = false, clear = false, start = false;
-    int offset = 42, square = 41, until;
-    int headCountStart, headCountEnd;
+    boolean running, save = false, body = false, clear = false, start = false, wrong = false;
+    int offset = 42, square = 41, until = 0;
+    int headCountStart = 0, headCountEnd = 0;
     int[][] board = new int[10][10];
    // Class
     JButton resetButton = new JButton("Play Again?");
@@ -22,7 +22,7 @@ public class Main extends JPanel implements ActionListener {
 
         frame.pack();
 
-        //frame.setLocationRelativeTo(null);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
     public Main(){
@@ -76,7 +76,6 @@ public class Main extends JPanel implements ActionListener {
 
                 g.setColor(Color.red);
                 g.drawString(" END UNTIL ->"+until, SCREEN_WIDTH - 192, offset*6);
-                if (until == 0) running = false;
             }
         }
     }
@@ -135,7 +134,6 @@ public class Main extends JPanel implements ActionListener {
                             g.setColor(Color.black);
                             g.fillRect(43 + offset * i, 43 + offset * j, square, square);
                             if (i == board.length-1 && j == board.length-1) {
-                                if (board[i][j]!=1 || board[i][j]!=2)running=false;
                                 start = true;
                             }
                         }
@@ -163,10 +161,17 @@ public class Main extends JPanel implements ActionListener {
             }
         }else{
             getResetButton().setVisible(true);
-            gameOver(g);
+            if (wrong)  gameWrong(g);
+            else        gameOver(g);
         }
     }
-    public void gameOver(Graphics g) {
+    private void gameWrong(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Ink Free", Font.BOLD, 75));
+        FontMetrics metrics2 = getFontMetrics(g.getFont());
+        g.drawString("ERROR!", (SCREEN_WIDTH - metrics2.stringWidth("ERROR!")) / 2, SCREEN_HEIGHT / 2);
+    }
+    private void gameOver(Graphics g) {
 
         if (until==0){
             g.setColor(Color.red);
@@ -182,6 +187,11 @@ public class Main extends JPanel implements ActionListener {
     }
     private void startGame() {
         running = true;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                board[i][j] = 0; // all spots are empty
+            }
+        }
         getResetButton().setVisible(false);
     }
     private void resetGame(){

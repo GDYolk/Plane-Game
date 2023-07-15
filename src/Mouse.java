@@ -1,3 +1,4 @@
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 public class Mouse implements MouseListener {
@@ -65,8 +66,14 @@ public class Mouse implements MouseListener {
     }
     private void createPlane(int x, int y) {
          if (x != -1 && y != -1) {
-             // PLANE OF HEAD ADD
-             if (x==14 && y==14) m.save = true;
+             if (x==14 && y==14) {
+                 m.save = true;
+                 if (m.until == 0 || m.headCountEnd == 0) {
+                     m.running = false;
+                     m.wrong = true;
+                 }
+             }
+                 // PLANE OF HEAD ADD
              else if (x==10 && y==10) {
                  m.headCountStart++;
                  m.body = false;
@@ -102,14 +109,14 @@ public class Mouse implements MouseListener {
             m.until--;
             if (m.board[x][y] == 1) {
                 m.headCountEnd--;
+                m.until++;
                 m.board[x][y] = 11;
             }
             else if (m.board[x][y] == 2)
                 m.board[x][y] = 22;
             else if (m.board[x][y]!=11 && m.board[x][y]!=22)
                 m.board[x][y] = 33;
-
-            if (m.headCountEnd==0)m.running=false;
+            if (m.headCountEnd==0 || m.until == 0) m.running=false;
             fail = false;
         } else fail = true;
     }

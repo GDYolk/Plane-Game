@@ -102,7 +102,7 @@ public class Main extends JPanel implements ActionListener {
                 g.setColor(Color.red);
                 g.drawString("WRONG!", 276, 534);
                 //IMAGE
-                ImageIcon xIcon = new ImageIcon("src/orangex.png");
+                ImageIcon xIcon = new ImageIcon("photo/Photo/orangex.png");
                 Image xImg = xIcon.getImage();
                 g.drawImage(xImg, 368, 496, null);
             }
@@ -148,7 +148,7 @@ public class Main extends JPanel implements ActionListener {
                                 g.setColor(Color.gray);
                                 g.fillRect(43 + offset * i, 43 + offset * j, square, square);
                             } else if (board[i][j] == 33) {
-                                ImageIcon xIcon = new ImageIcon("src/orangex.png");
+                                ImageIcon xIcon = new ImageIcon("photo/Photo/orangex.png");
                                 Image xImg = xIcon.getImage();
                                 Image newXImg = xImg.getScaledInstance(27, 27, java.awt.Image.SCALE_SMOOTH);
                                 ImageIcon newXIcon = new ImageIcon(newXImg);

@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Objects;
 
 public class Main extends JPanel implements ActionListener {
     final int SCREEN_HEIGHT = 600, SCREEN_WIDTH = 700, UNIT_SIZE = 42;
@@ -11,13 +12,15 @@ public class Main extends JPanel implements ActionListener {
    // Class
     JButton resetButton = new JButton("Play Again?");
     Mouse mouse  = new Mouse(this);
+    ImageIcon xIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("Photo/orangex.png")));
+    public static ImageIcon logo = new ImageIcon(Objects.requireNonNull(Main.class.getClassLoader().getResource("Photo/plane.png")));
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setTitle("Plane");
-
+        frame.setIconImage(logo.getImage());
         frame.getContentPane().add(new Main());
 
         frame.pack();
@@ -102,7 +105,6 @@ public class Main extends JPanel implements ActionListener {
                 g.setColor(Color.red);
                 g.drawString("WRONG!", 276, 534);
                 //IMAGE
-                ImageIcon xIcon = new ImageIcon("photo/Photo/orangex.png");
                 Image xImg = xIcon.getImage();
                 g.drawImage(xImg, 368, 496, null);
             }
@@ -148,7 +150,6 @@ public class Main extends JPanel implements ActionListener {
                                 g.setColor(Color.gray);
                                 g.fillRect(43 + offset * i, 43 + offset * j, square, square);
                             } else if (board[i][j] == 33) {
-                                ImageIcon xIcon = new ImageIcon("photo/Photo/orangex.png");
                                 Image xImg = xIcon.getImage();
                                 Image newXImg = xImg.getScaledInstance(27, 27, java.awt.Image.SCALE_SMOOTH);
                                 ImageIcon newXIcon = new ImageIcon(newXImg);
@@ -201,7 +202,7 @@ public class Main extends JPanel implements ActionListener {
             }
         }
         headCountEnd = headCountStart = until =0;
-        save = clear = false;
+        wrong = save = clear = false;
         running = true;
         getResetButton().setVisible(false);
     }
